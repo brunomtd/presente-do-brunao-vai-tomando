@@ -5,9 +5,7 @@
 <title>Steam Gift 🎮</title>
 
 <style>
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
@@ -15,7 +13,6 @@
     background: linear-gradient(180deg, #1b2a3a, #0f1722);
     font-family: system-ui, Arial, sans-serif;
     color: white;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,6 +38,18 @@
     box-shadow: 0 15px 30px rgba(0,0,0,.4);
   }
 
+  .gift-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    filter: blur(12px);
+    transition: filter 0.4s ease;
+  }
+
+  .gift-image.revealed {
+    filter: blur(0);
+  }
+
   .key {
     background: #000;
     padding: 12px;
@@ -50,6 +59,15 @@
     letter-spacing: 2px;
     font-size: 1.1rem;
     display: none;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 10px;
+    font-size: 1rem;
   }
 
   button, a {
@@ -62,7 +80,8 @@
     color: white;
     font-size: 1rem;
     text-decoration: none;
-    display: inline-block;
+    display: block;
+    margin-top: 10px;
   }
 
   button:hover, a:hover {
@@ -79,9 +98,7 @@
   }
 
   @media (max-width: 700px) {
-    .cards {
-      grid-template-columns: 1fr;
-    }
+    .cards { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -94,38 +111,76 @@
 
     <!-- CARD 1 -->
     <div class="card">
-      <img src="ibagens/helld.jpg" alt="Steam Gift 1" class="gift-image">
+      <img src="ibagens/kcd.jpg" class="gift-image" id="img1">
       <div class="key" id="key1">AAAAA-BBBBB-CCCCC</div>
-      <button onclick="revealKey('key1')">vai tomando</button>
+      <input type="password" id="pass1" placeholder="Enter password">
+      <button id="btn1" onclick="unlock('key1','img1','pass1','btn1')">
+        Unlock
+      </button>
     </div>
 
     <!-- CARD 2 -->
     <div class="card">
-      <img src="ibagens/kcd.jpg" alt="Steam Gift 2" class="gift-image">
+      <img src="ibagens/helld.jpg" class="gift-image" id="img2">
       <div class="key" id="key2">DDDDD-EEEEE-FFFFF</div>
-      <button onclick="revealKey('key2')">e vai tomando mais</button>
+      <input type="password" id="pass2" placeholder="Enter password">
+      <button id="btn2" onclick="unlock('key2','img2','pass2','btn2')">
+        Unlock
+      </button>
     </div>
 
   </div>
 
-  <!-- STEAM REDEEM BOX -->
   <div class="redeem-box">
-    <h2>🚀 ATIVAAAAAAAA</h2>
+    <h2>🚀 Activate on Steam</h2>
     <a href="steam://open/activateproduct">
-      Mete o dedo aqui pra abrir a steam
+      Open Steam Redeem Page
     </a>
-    <p style="opacity:.7; margin-top:10px;">
-      Se não abrir vai ter que ir fazer manualmente.
-    </p>
   </div>
 
 </div>
 
 <script>
-  function revealKey(id) {
-    const el = document.getElementById(id);
-    el.style.display = "block";
+  const passwords = {
+    key1: "1232",
+    key2: "1232"
+  };
+
+  function unlock(keyId, imgId, passId, btnId) {
+    const input = document.getElementById(passId);
+    if (input.value !== passwords[keyId]) {
+      alert("Wrong password");
+      return;
+    }
+
+    reveal(keyId, imgId, btnId);
+    localStorage.setItem(keyId, "unlocked");
   }
+
+  function reveal(keyId, imgId, btnId) {
+    document.getElementById(keyId).style.display = "block";
+    document.getElementById(imgId).classList.add("revealed");
+
+    const btn = document.getElementById(btnId);
+    btn.innerText = "Copy Key";
+    btn.onclick = () => copyKey(keyId);
+
+    const input = btn.previousElementSibling;
+    input.style.display = "none";
+  }
+
+  function copyKey(keyId) {
+    const key = document.getElementById(keyId).innerText;
+    navigator.clipboard.writeText(key)
+      .then(() => alert("Steam key copied!"));
+  }
+
+  // Restore unlocked state
+  ["key1","key2"].forEach((id, i) => {
+    if (localStorage.getItem(id)) {
+      reveal(id, "img"+(i+1), "btn"+(i+1));
+    }
+  });
 </script>
 
 </body>
