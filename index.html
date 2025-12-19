@@ -1,68 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Steam Gift</title>
+<meta charset="UTF-8">
+<title>Steam Gift 🎮</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1b2838;
-      color: white;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    .card {
-      background: #16202d;
-      padding: 24px;
-      border-radius: 12px;
-      width: 320px;
-      text-align: center;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #1b2a3a, #0f1722);
+    font-family: system-ui, Arial, sans-serif;
+    color: white;
 
-    .key {
-      font-family: monospace;
-      background: #000;
-      padding: 12px;
-      margin: 16px 0;
-      border-radius: 6px;
-      user-select: all;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    a, button {
-      display: block;
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 8px;
-      background: #2a475e;
-      color: white;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
+  .container {
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    background: #16202d;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,.4);
+  }
+
+  .key {
+    background: #000;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-family: monospace;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    display: none;
+  }
+
+  button, a {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #1b2838;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  button:hover, a:hover {
+    background: #2a475e;
+  }
+
+  .redeem-box {
+    margin-top: 30px;
+    background: #101820;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,.4);
+  }
+
+  @media (max-width: 700px) {
+    .cards {
+      grid-template-columns: 1fr;
     }
-  </style>
+  }
+</style>
 </head>
 
 <body>
-  <div class="card">
-    <h2>🎁 Steam Gift</h2>
-    <p>Your activation key:</p>
 
-    <!-- CHANGE THIS -->
-    <div class="key" id="steamKey">XXXXX-XXXXX-XXXXX</div>
+<div class="container">
 
-    <p>
-      Copy the key and activate it on Steam.
-    </p>
+  <div class="cards">
 
-    <a href="https://store.steampowered.com/account/registerkey" target="_blank">
-      Open Steam Activation Page
-    </a>
+    <!-- CARD 1 -->
+    <div class="card">
+      <img src="ibagens/helld.jpg" alt="Steam Gift 1" class="gift-image">
+      <div class="key" id="key1">AAAAA-BBBBB-CCCCC</div>
+      <button onclick="revealKey('key1')">vai tomando</button>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card">
+      <img src="ibagens/kcd.jpg" alt="Steam Gift 2" class="gift-image">
+      <div class="key" id="key2">DDDDD-EEEEE-FFFFF</div>
+      <button onclick="revealKey('key2')">e vai tomando mais</button>
+    </div>
+
   </div>
+
+  <!-- STEAM REDEEM BOX -->
+  <div class="redeem-box">
+    <h2>🚀 ATIVAAAAAAAA</h2>
+    <a href="steam://open/activateproduct">
+      Mete o dedo aqui pra abrir a steam
+    </a>
+    <p style="opacity:.7; margin-top:10px;">
+      Se não abrir vai ter que ir fazer manualmente.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  function revealKey(id) {
+    const el = document.getElementById(id);
+    el.style.display = "block";
+  }
+</script>
+
 </body>
 </html>
