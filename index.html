@@ -111,7 +111,7 @@
 
     <!-- CARD 1 -->
     <div class="card">
-      <img src="ibagens/kcd.jpg" class="gift-image" id="img1">
+      <img src="ibagens/helld.jpg" class="gift-image" id="img1">
       <div class="key" id="key1">AAAAA-BBBBB-CCCCC</div>
       <input type="password" id="pass1" placeholder="Enter password">
       <button id="btn1" onclick="unlock('key1','img1','pass1','btn1')">
@@ -121,7 +121,7 @@
 
     <!-- CARD 2 -->
     <div class="card">
-      <img src="ibagens/helld.jpg" class="gift-image" id="img2">
+      <img src="ibagens/kcd.jpg" class="gift-image" id="img2">
       <div class="key" id="key2">DDDDD-EEEEE-FFFFF</div>
       <input type="password" id="pass2" placeholder="Enter password">
       <button id="btn2" onclick="unlock('key2','img2','pass2','btn2')">
@@ -142,22 +142,18 @@
 
 <script>
   const passwords = {
-    key1: "1232",
-    key2: "1232"
+    key1: "123",
+    key2: "123"
   };
 
   function unlock(keyId, imgId, passId, btnId) {
     const input = document.getElementById(passId);
+
     if (input.value !== passwords[keyId]) {
       alert("Wrong password");
       return;
     }
 
-    reveal(keyId, imgId, btnId);
-    localStorage.setItem(keyId, "unlocked");
-  }
-
-  function reveal(keyId, imgId, btnId) {
     document.getElementById(keyId).style.display = "block";
     document.getElementById(imgId).classList.add("revealed");
 
@@ -165,22 +161,21 @@
     btn.innerText = "Copy Key";
     btn.onclick = () => copyKey(keyId);
 
-    const input = btn.previousElementSibling;
     input.style.display = "none";
   }
 
   function copyKey(keyId) {
-    const key = document.getElementById(keyId).innerText;
-    navigator.clipboard.writeText(key)
-      .then(() => alert("Steam key copied!"));
-  }
+    const fullKey = document.getElementById(keyId).innerText;
 
-  // Restore unlocked state
-  ["key1","key2"].forEach((id, i) => {
-    if (localStorage.getItem(id)) {
-      reveal(id, "img"+(i+1), "btn"+(i+1));
-    }
-  });
+    // split by dash
+    const parts = fullKey.split("-");
+
+    // copy only first 2 blocks
+    const halfKey = parts.slice(0, 2).join("-");
+
+    navigator.clipboard.writeText(halfKey)
+      .then(() => alert("Copiado!"));
+  }
 </script>
 
 </body>
