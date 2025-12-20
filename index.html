@@ -171,7 +171,7 @@
     const parts = fullKey.split("-");
 
     // copy only first 2 blocks
-    const halfKey = parts.slice(0, 2).join("-");
+    const partialKey = parts[0] + "-" + parts[1] + "-";
 
     navigator.clipboard.writeText(halfKey)
       .then(() => alert("Copiado!"));
